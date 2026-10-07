@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stowsky — every story starts with a spark</title>
+<meta name="description" content="Stowsky is a free canvas for storytellers. Images, sounds, memories and thoughts meet, connect and slowly develop into a story.">
+<script>document.documentElement.className = 'js'</script>
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0c0a09; --line: #2a2420;
+  --paper: #efe7da; --paper-dim: #b9b0a3; --ash: #7a7168;
+  --safelight: #c8321e; --glow: rgba(200, 50, 30, 0.35);
+  --grease: #f6dc9a; --grease-hot: #f2c94c;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ink); color: var(--paper); font: 400 17px/1.6 Inter, -apple-system, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::after { content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .045; background: url(grain.png) repeat; background-size: 160px; transform: translateZ(0); }
+@media (prefers-reduced-motion: reduce) { .js .develop::after { animation: none !important; opacity: 0 !important; } }
+a { color: inherit; }
+img { max-width: 100%; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 28px; }
+.slug { font: 700 13px/1 'Courier Prime', monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--paper-dim); }
+.slug b { color: var(--safelight); }
+.btn { cursor: pointer; transition: transform .18s cubic-bezier(.2,.8,.2,1), background .18s ease; display: inline-block; text-decoration: none; font: 700 15px 'Courier Prime', monospace; letter-spacing: .04em; padding: 15px 24px; border-radius: 2px; background: var(--grease); color: var(--ink); }
+h2 { font: 500 clamp(32px, 3.4vw, 48px)/1.08 'Space Grotesk', system-ui, sans-serif; letter-spacing: -.035em; margin: 20px 0 0; max-width: 900px; }
+h2 em { color: var(--grease); font-style: normal; }
+.sub { max-width: 500px; margin-top: 22px; font: 400 16px/1.75 'Courier Prime', 'Courier New', monospace; color: var(--paper-dim); }
+.sub b { color: var(--paper); font-weight: 700; }
+.sub .hl { color: var(--grease); }
+
+nav { position: absolute; top: 0; left: 0; right: 0; z-index: 20; }
+nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 76px; }
+.mark { display: flex; align-items: center; gap: 10px; text-decoration: none; font: 500 21px/30px 'Space Grotesk', system-ui, sans-serif; letter-spacing: -.02em; }
+.mark img { width: 30px; height: 30px; border-radius: 7px; display: block; }
+nav .btn { padding: 9px 16px; font-size: 14px; }
+
+/* ── The spark ─────────────────────────────── */
+.hero { position: relative; padding: 150px 0 0; }
+.hero-copy { position: relative; text-align: center; }
+.hero-copy .slug, .hero-copy .sub { margin-left: auto; margin-right: auto; }
+.hero-copy .sub { max-width: 620px; }
+/* A MacBook, shown only down to the middle of its screen: the page cuts it, and the cut fades. */
+.macbook { position: relative; max-width: 1060px; margin: 72px auto 0; height: clamp(300px, 40vw, 520px); overflow: hidden;
+  -webkit-mask-image: linear-gradient(#000 62%, transparent); mask-image: linear-gradient(#000 62%, transparent); }
+.macbook .lid { position: relative; background: #050505; border-radius: 26px 26px 0 0; padding: 28px 22px 0; border: 1.5px solid #3b3b3d;
+  box-shadow: inset 0 0 0 6px #0c0c0d, 0 0 140px rgba(200, 50, 30, .18); }
+.macbook .cam { position: absolute; top: 11px; left: 50%; width: 6px; height: 6px; margin-left: -3px; border-radius: 50%; background: #1b2130; box-shadow: 0 0 0 1.5px #0d0f14; }
+.develop::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(rgba(60,14,6,.92), rgba(30,6,3,.96)); }
+.js .develop::after { opacity: 1; }
+.js .develop.on::after { animation: unveil 3.2s cubic-bezier(.4,0,.2,1) .6s both; }
+html:not(.js) .develop::after { display: none; }
+@keyframes unveil { from { opacity: 1 } to { opacity: 0 } }
+.macbook img { display: block; width: 100%; height: auto; border-radius: 6px 6px 0 0; }
+.hero-cta { margin-top: 34px; }
+.hero::before { content: ''; position: absolute; left: 50%; top: -15%; width: 1200px; max-width: 160vw; height: 1000px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(200,50,30,.26), rgba(200,50,30,.07) 55%, transparent 75%); pointer-events: none; }
+.hero h1 { position: relative; font: 500 clamp(46px, 6.2vw, 88px)/1.0 'Space Grotesk', system-ui, sans-serif; letter-spacing: -.045em; margin: 26px 0 0; }
+.hero h1 em { color: var(--safelight); font-style: normal; text-shadow: 0 0 40px var(--glow); }
+.hero .sub { position: relative; margin-top: 28px; font-size: 17px; max-width: 600px; }
+
+
+/* ── App screenshots ───────────────────────── */
+section { padding: 190px 0 0; }
+.window { margin-top: 52px; border-radius: 12px; overflow: hidden; border: 1px solid #2c2622; box-shadow: 0 40px 100px rgba(0,0,0,.65); background: #181818; }
+.window img { display: block; width: 100%; height: auto; }
+
+.split { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: center; }
+.split.flip { grid-template-columns: 1.1fr .9fr; }
+.split.flip .window { order: -1; }
+.split .window { margin-top: 0; aspect-ratio: 16 / 10; }
+.split .window img { width: 100%; height: 100%; object-fit: cover; }
+.states { margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 24px; }
+.states div { font: 400 15px/1.5 'Courier Prime', monospace; color: var(--paper-dim); border-top: 1px solid var(--line); padding-top: 12px; }
+.states b { display: block; font: 700 12px/1 'Courier Prime', monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--paper); margin-bottom: 6px; }
+
+/* ── Close ─────────────────────────────────── */
+.close { position: relative; text-align: center; padding: 150px 0 120px; }
+.close::before { content: ''; position: absolute; left: 50%; top: 0; width: 900px; max-width: 140vw; height: 600px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(200,50,30,.16), transparent 70%); pointer-events: none; }
+.close h2 { position: relative; margin: 20px auto 0; }
+.close h2 em { color: var(--safelight); }
+.close .btn { position: relative; margin-top: 38px; }
+.close .sub { position: relative; margin: 20px auto 0; text-align: center; }
+footer { border-top: 1px solid var(--line); padding: 26px 0 36px; font: 400 13px 'Courier Prime', monospace; color: var(--ash); }
+footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 900px) {
+  .split, .split.flip { grid-template-columns: 1fr; gap: 36px; }
+  .split.flip .window { order: 0; }
+}
+@media (max-width: 700px) {
+  .wrap { padding: 0 16px; }
+  .hero { padding-top: 110px; }
+  section { padding-top: 120px; }
+  .macbook { margin-top: 48px; height: 230px; }
+  .macbook .lid { padding: 14px 10px 0; border-radius: 14px 14px 0 0; }
+  .macbook .cam { top: 5px; width: 4px; height: 4px; margin-left: -2px; }
+    }
+
+/* ── Request access ─────────────────────────── */
+.access { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; background: rgba(6, 5, 4, .72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; transition: opacity .2s ease; }
+.access[hidden] { display: none; }
+.access.on { opacity: 1; }
+.access-card { position: relative; width: 100%; max-width: 520px; background: #14110f; border: 1px solid #3a302a; border-radius: 6px; padding: 38px 36px 30px; box-shadow: 0 40px 120px rgba(0,0,0,.7), 0 0 120px rgba(200,50,30,.12); transform: translateY(10px); transition: transform .25s cubic-bezier(.2,.8,.2,1); }
+.access.on .access-card { transform: none; }
+.access h3 { font: 500 34px/1.05 'Space Grotesk', system-ui, sans-serif; letter-spacing: -.035em; margin: 16px 0 0; }
+.access-copy { margin: 14px 0 0; font: 400 15px/1.7 'Courier Prime', monospace; color: var(--paper-dim); }
+.access-copy b { color: var(--paper); }
+.access-label { display: block; margin-top: 26px; font: 700 11px 'Courier Prime', monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--paper-dim); }
+.access-row { display: flex; gap: 10px; margin-top: 10px; }
+.access-row input { flex: 1; min-width: 0; height: 50px; padding: 0 14px; border-radius: 2px; border: 1px solid #4a403a; background: #0c0a09; color: var(--paper); font: 400 16px 'Courier Prime', monospace; }
+.access-row input:focus { outline: none; border-color: var(--grease); box-shadow: 0 0 0 3px rgba(246,220,154,.15); }
+.access-row .btn { border: 0; cursor: pointer; white-space: nowrap; }
+.access-row .btn:disabled { opacity: .7; cursor: default; }
+.access-msg { min-height: 20px; margin: 10px 0 0; font: 400 13.5px 'Courier Prime', monospace; color: #e07a5f; }
+.access-fine { margin: 6px 0 0; font: 400 12.5px 'Courier Prime', monospace; color: var(--ash); }
+.access-done .btn { margin-top: 26px; border: 0; cursor: pointer; }
+.access-x { position: absolute; top: 12px; right: 14px; width: 34px; height: 34px; border: 0; background: none; color: var(--paper-dim); font: 400 26px/1 system-ui; cursor: pointer; border-radius: 4px; }
+.access-x:hover { color: var(--paper); background: rgba(255,255,255,.06); }
+@media (max-width: 560px) { .access-card { padding: 32px 22px 24px; } .access-row { flex-direction: column; } .access-row .btn { height: 50px; } }
+
+/* ── Motion ────────────────────────────────────
+   Gentle and once: things rise into place as the page loads and as each reel scrolls into view;
+   the safelight breathes; screenshots lift a little under the pointer. Nothing loops in the
+   reader's face, and none of it plays for people who ask for reduced motion. */
+.btn:hover { transform: translateY(-2px); background: #f8e3ad; }
+.btn:active { transform: translateY(0); }
+.js .rise { will-change: transform, opacity; opacity: 0; transform: translate3d(0, 22px, 0); transition: opacity .9s cubic-bezier(.2,.8,.2,1), transform 1.1s cubic-bezier(.2,.8,.2,1); transition-delay: var(--d, 0s); }
+.js .rise.in { opacity: 1; transform: none; }
+.js .split .rise-side { will-change: transform, opacity; opacity: 0; transform: translate3d(var(--from, 28px), 0, 0); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); }
+.js .split.flip .rise-side { --from: -28px; }
+.js .split.in .rise-side { opacity: 1; transform: none; }
+.js .split > div:first-child { will-change: transform, opacity; opacity: 0; transform: translate3d(0, 16px, 0); transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .9s cubic-bezier(.2,.8,.2,1); }
+.js .split.in > div:first-child { opacity: 1; transform: none; }
+.js .macbook { will-change: transform, opacity; transform: translateY(60px) scale(.97); opacity: 0; transition: transform 1.4s cubic-bezier(.16,.9,.2,1) .45s, opacity 1s ease .45s; }
+.js .macbook.in { transform: none; opacity: 1; }
+.split .window { position: relative; overflow: visible; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.split .window img { border-radius: 12px; }
+.split .window::before { content: ''; position: absolute; inset: 0; border-radius: 12px; box-shadow: 0 60px 120px rgba(0,0,0,.55); opacity: 0; transition: opacity .5s ease; pointer-events: none; z-index: -1; }
+.split .window:hover::before { opacity: 1; }
+.split .window:hover, .js .split.in .rise-side:hover { transform: translate3d(0, -6px, 0); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+.hero::before { animation: breathe 7s ease-in-out infinite; will-change: opacity; }
+@keyframes breathe { 0%, 100% { opacity: .85 } 50% { opacity: 1 } }
+.slug b { display: inline-block; animation: pulse 2.6s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1 } 50% { opacity: .35 } }
+@media (prefers-reduced-motion: reduce) {
+  .js .rise, .js .split .rise-side, .js .split > div:first-child, .js .macbook { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .hero::before, .slug b { animation: none !important; }
+  .split .window:hover, .btn:hover { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="mark" href="#"><img src="icon.png" alt="" width="30" height="30">Stowsky</a>
+    <a class="btn" data-access href="mailto:hello@stowsky.com?subject=Stowsky%20access">Request access</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-copy">
+    <div class="slug rise" style="--d:.05s"><b>●</b>&nbsp; INT. DARKROOM — NIGHT</div>
+    <h1 class="rise" style="--d:.15s">Every story starts<br>with a <em>spark.</em></h1>
+    <p class="sub rise" style="--d:.3s">The blank page was never empty. It's a photograph you can't stop looking at, a sound, a memory, a question at 3 a.m. <b>A story develops when sparks meet</b>, and more keep coming. Stowsky is the space where they connect, grow, and become a fully developed story.</p>
+    <a class="btn hero-cta rise" style="--d:.42s" data-access href="mailto:hello@stowsky.com?subject=Stowsky%20access">Request access</a>
+  </div>
+  <div class="wrap">
+    <div class="macbook develop" id="develop">
+      <div class="lid">
+        <div class="cam" aria-hidden="true"></div>
+        <img decoding="async" src="app-mac.jpg" alt="Stowsky on a MacBook: a whole film, The Night Ferry, laid out on one canvas — sparks, a character, a place, themes, a source and research, with photos, a reel and a trailer" width="1800" height="1080">
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap split">
+    <div>
+      <div class="slug"><b>REEL 1</b> &nbsp;· THE FREE CANVAS</div>
+      <h2>An open canvas.<br><em>Explore freely.</em></h2>
+      <p class="sub">Bring in what moves you: <span class="hl">photos</span>, <span class="hl">Instagram reels</span>, <span class="hl">YouTube</span>, <span class="hl">songs</span>, <span class="hl">sounds</span>, <span class="hl">a line you wrote at 3 a.m.</span> Put it anywhere, move it around, gather it into frames. No templates. No order you have to follow.</p>
+    </div>
+    <div class="window rise-side"><img decoding="async" src="app-toolbar.jpg" alt="Sparks on the Stowsky canvas — photos, an Instagram reel and notes — above the toolbar for adding photos, video, Spotify and Instagram" width="1600" height="1000"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap split flip">
+    <div>
+      <div class="slug"><b>REEL 2</b> &nbsp;· THE HEART</div>
+      <h2>Highlight the ones<br><em>you love.</em></h2>
+      <p class="sub">Every card has a heart. Fill it as an idea earns its place, and see at a glance what is working.</p>
+      <div class="states">
+        <div><b>Explore</b>still finding it</div>
+        <div><b>Like</b>worth keeping</div>
+        <div><b>Love</b>this is it</div>
+        <div><b>Lock</b>decided. build on it</div>
+      </div>
+    </div>
+    <div class="window rise-side"><img decoding="async" style="object-position: 50% 0%" src="app-hearts.jpg" alt="The status panel on a Stowsky card: Explore, Like, Love and Lock" width="900" height="893"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap split">
+    <div>
+      <div class="slug"><b>REEL 3</b> &nbsp;· THE COLLABORATOR</div>
+      <h2>A collaborator who<br><em>knows your story.</em></h2>
+      <p class="sub">Stowsky knows your taste, your preferences and your whole story: every spark, every heart, the films you love, the ideas you dropped. <b>So when you ask, its suggestions fit.</b> Keep what lands. Reject the rest.</p>
+    </div>
+    <div class="window rise-side"><img decoding="async" style="object-position: 100% 0%" src="app-suggest.jpg" alt="A suggested beat from Stowsky beside the character frame for Mira, with Accept and Reject" width="1500" height="796"></div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap rise">
+    <div class="slug"><b>●</b>&nbsp; FADE IN</div>
+    <h2>Bring your <em>first spark.</em></h2>
+    <p class="sub">An image, a song, a memory. We'll give you the space to grow it into a story.</p>
+    <a class="btn" data-access href="mailto:hello@stowsky.com?subject=Stowsky%20access">Request access</a>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>STOWSKY © 2026</span><span>every story starts with a spark</span></div></footer>
+
+
+<div class="access" id="access" role="dialog" aria-modal="true" aria-labelledby="access-title" hidden>
+  <div class="access-card">
+    <button class="access-x" type="button" aria-label="Close" data-close>×</button>
+    <form id="access-form" novalidate>
+      <div class="slug"><b>●</b>&nbsp; REQUEST ACCESS</div>
+      <h3 id="access-title">Bring your first spark.</h3>
+      <p class="access-copy">Leave your email and we'll send your invite as soon as your seat is ready.</p>
+      <label class="access-label" for="access-email">Email</label>
+      <div class="access-row">
+        <input id="access-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <button class="btn" type="submit">Request access</button>
+      </div>
+      <p class="access-msg" id="access-msg" role="alert"></p>
+      <p class="access-fine">One email when your access is ready. No spam.</p>
+    </form>
+    <div class="access-done" id="access-done" hidden>
+      <div class="slug"><b>●</b>&nbsp; YOU'RE ON THE LIST</div>
+      <h3>Your seat is saved.</h3>
+      <p class="access-copy">We'll send your access to <b id="access-who"></b> soon. Until then, keep collecting sparks.</p>
+      <button class="btn" type="button" data-close>Back to the page</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Where requests are sent: the Stowsky early-access form on Formspree (a POST with an "email"
+  // field; each one arrives by email and in the Formspree dashboard).
+  const ACCESS_ENDPOINT = 'https://formspree.io/f/mqpepegj'
+
+  const dialog = document.getElementById('access'), form = document.getElementById('access-form'), input = document.getElementById('access-email')
+  const msg = document.getElementById('access-msg'), done = document.getElementById('access-done')
+  let opener = null
+  const open = (e) => {
+    e.preventDefault(); opener = e.currentTarget
+    form.hidden = false; done.hidden = true; msg.textContent = ''
+    dialog.hidden = false; document.body.style.overflow = 'hidden'
+    requestAnimationFrame(() => { dialog.classList.add('on'); input.focus() })
+  }
+  const close = () => { dialog.classList.remove('on'); document.body.style.overflow = ''; setTimeout(() => { dialog.hidden = true }, 200); opener?.focus() }
+  document.querySelectorAll('[data-access]').forEach((b) => b.addEventListener('click', open))
+  dialog.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', close))
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) close() })
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !dialog.hidden) close() })
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault()
+    const email = input.value.trim()
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { msg.textContent = 'That email doesn\'t look right. Try again?'; input.focus(); return }
+    const btn = form.querySelector('button[type=submit]'); btn.disabled = true; btn.textContent = 'Sending…'; msg.textContent = ''
+    try {
+      if (ACCESS_ENDPOINT) {
+        const res = await fetch(ACCESS_ENDPOINT, { method: 'POST', headers: { Accept: 'application/json' }, body: new URLSearchParams({ email, source: 'stowsky.com' }) })
+        if (!res.ok) throw new Error(String(res.status))
+      }
+      document.getElementById('access-who').textContent = email
+      form.hidden = true; done.hidden = false
+      done.querySelector('button').focus()
+    } catch {
+      msg.textContent = 'Something went wrong. Please try again in a moment.'
+    } finally {
+      btn.disabled = false; btn.textContent = 'Request access'
+    }
+  })
+
+  // Things rise into place: the hero at once, each reel as it scrolls into view.
+  const reveal = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { e.target.classList.add('in'); reveal.unobserve(e.target) } }, { threshold: 0, rootMargin: '0px 0px 10% 0px' })
+  document.querySelectorAll('.split, .close .rise').forEach((el) => reveal.observe(el))
+  requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll('.hero .rise, .macbook').forEach((el) => el.classList.add('in'))))
+  document.addEventListener('transitionend', (e) => { const el = e.target; if (el.matches?.('.rise.in, .split.in > *, .macbook.in') && e.propertyName === 'transform') el.style.willChange = 'auto' })
+
+  // The hero screenshot develops like a print once it's on screen.
+  const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target) } }, { threshold: 0.2 })
+  io.observe(document.getElementById('develop'))
+</script>
+</body>
+</html>
